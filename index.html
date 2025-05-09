@@ -8,7 +8,27 @@
   <script defer src="./scripts/main.js"></script>
 </head>
 <body>
-<h1>Mes dépenses</h1>
-<input type="number" id="depenses" name="depenses" min="0" max="100" />
+<div class="container">
+  <h1>Mes dépenses</h1>
+  <form action="#">
+    <label for="description">Description</label>
+    <input type="text" name="description de la dépense" autofocus>
+
+    <label for="montant">montant</label>
+    <input type="text" name="montant" id="montant" placeholder="montant">
+
+    <label for="categorie">categorie</label>
+    <select name="categorie" id="categorie" aria-placeholder="Choisis la categorie">
+      <option value="placeholder" disabled selected>Choisis la categorie</option>
+      <option value="divertissement">divertissement</option>
+      <option value="transport">transport</option>
+      <option value="logement">logement</option>
+      <option value="alimentation">alimentation</option>
+      <option value="autre">autre</option>
+    </select>
+    <button class="btn-add">Ajouter</button>
+  </form>
+
+</div>
 </body>
 </html>
