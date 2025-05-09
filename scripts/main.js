@@ -1,73 +1,91 @@
-//=============================
-// Sélection des élémts 🌱
-//=============================
-
-const inputCategorie =   document.getElementById('categorie');
-const inputMontant =     document.getElementById('montant');
-const inputDescription = document.getElementById('description');
-const btnAdd =         document.getElementById('btn-add');
-const btnDel =         document.getElementById('delete');
-const tot =            document.querySelector('.total span');
-const depenseList =    document.querySelector('depense-list')
-//=============================
-//🧠 Variables Globales
-//=============================
-const depense =[];
+// ==============================
+// 🌱 Sélection des éléments
+// ==============================
+const addBt =               document.querySelector('.add-button');
+const descriptionInput =    document.querySelector('.description');
+const amountInput =         document.querySelector('.amount');
+const categoryInput =       document.querySelector('.category');
+const depenseList =         document.querySelector('.depense-list');
+const tot =                 document.querySelector('.total span');
+// ==============================
+// 🧠 Variables globales
+// ==============================
+const depenses = [];
 let total = 0;
-//=============================
-// Fonctionnalités
-//=============================
+// ==============================
+// 🎊 Fonctionnalités
+// ==============================
 
-//fonction pour reset les champs du formulaire
+// Fonction pour reset les champs du formulaire
 function resetForm() {
-    descriptionInput.value= '';
-    montanttInput.value=    '';
-    categorieInput.value=   '';
-    descriptionInput.focus();
+  descriptionInput.value = '';
+  amountInput.value = '';
+  categoryInput.value = '';
+  descriptionInput.focus();
 }
 
-//Fonction pour ajouter une dépense 
-function addDepense(description, montant, categorie){
-    depense.push([description,montant,categorie]);
-    total += parseFloat(montant);
-    tot.textContent = `${total}`;
-    resetForm();
+// Fonction pour ajouter un Emoji en fonction de la catégorie
+function getEmoji(category) {
+  if (category === 'alimentation') return '🍔 ';
+  if (category === 'transport') return '🚗 ';
+  if (category === 'loisirs') return '🎉 ';
+  if (category === 'logement') return '🏠 ';
+  return '🧾 '; // emoji par défaut
+}
+
+// Fonction pour ajouter une dépense
+function addDepense(description, amount, category) {
+  depenses.push([description, amount, category]);
+  total += parseFloat(amount);
+  tot.textContent = `${total}`;
+  resetForm();
 }
 
 // Fonction pour afficher les dépenses
-function displayDepenses(){
-    depenseList.innerHtml = ''; // vide la lise avant d'afficher 
-    if (depense.length === 0) {
-        depenseList = '<p>Aucune dépense enregistrée.</p>';
-    }
-    else {
-        depense.forEach((depense,index) =>{
-            const div = document.createElement('div');
-            div.className = 'depense-item';
-            div.innerHTML = `
-            ${depense[0]} | ${depense[1]} | ${depense[2]}
-            <button class="delete bouton" data-index="${index}" title="Supprimer ${depense[0]}">❌</button>`;
-            depenseList.appendChild(div);
-        })
-    }
+function displayDepenses() {
+  depenseList.innerHTML = ''; // Vider la liste avant de l'afficher
+  if (depenses.length === 0) {
+    depenseList.innerHTML = '<p>Aucune dépense enregistrée.</p>';
+  } else {
+    depenses.forEach((depense, index) => {
+      const div = document.createElement('div');
+      div.className = 'depense-item';
+      div.innerHTML = `
+      ${getEmoji(depense[2])} ${depense[0]} | ${depense[1]}€
+      <button class="delete-button" data-index="${index}" title="Supprimer ${depense[0]}">❌</button>
+      `;
+      depenseList.appendChild(div);
+    });
+  }
 }
+
 // Fonction pour supprimer une dépense
-function deleteDepense(index){
-
+function deleteDepense(index) {
+  const montant = parseFloat(depenses[index][1]); 
+  depenses.splice(index, 1); 
+  total -= montant; 
+  tot.textContent = `${total}`;
+  displayDepenses();
 }
 
-// =================================
-// 🧲 Events
-// =================================
-btnAdd.addEventListener('click', (e) =>{
-    e.preventDefault();
-    const description = inputDescription.value;
-    const montant =     inputMontant.value;
-    const categorie =   inputCategorie.value;
+// ==============================
+// 🧲 Événements
+// ==============================
+addBt.addEventListener('click', (e) => {
+  e.preventDefault();
+  const description = descriptionInput.value;
+  const amount = amountInput.value;
+  const category = categoryInput.value;
 
-    if(description && !isNaN(montant)&& categorie){
-        addDepense(description,montant,categorie);
-        displayDepenses()
-    }
-    else(alert('something has gone wrong'))
-}) 
+  if (description && !isNaN(amount) && category) {
+    addDepense(description, amount, category);
+    displayDepenses();
+  }
+});
+
+depenseList.addEventListener('click', (e) => {
+  if (e.target.matches('.delete-button')) {   
+    const index = e.target.dataset.index;
+    deleteDepense(index);
+  }
+});

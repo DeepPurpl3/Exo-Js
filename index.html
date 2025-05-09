@@ -3,35 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TemplateJS</title>
+  <title>Gestion des dépenses</title>
   <link rel="stylesheet" href="styles/styles.min.css">
-  <script defer src="./scripts/main.js"></script>
+  <script src="scripts/main.js" defer></script>
 </head>
 <body>
-<div class="container">
-  <h1>💰Mes dépenses💰</h1>
-  <form action="#" class="formmod">
-    <label for="description">Description</label>
-    <input type="text" name="description de la dépense" autofocus>
+  <h1>💰 Gestion des dépenses 💰</h1>
+  <div class="container">
+    <form class="expense-form">
+      <div class="form-content">
+        <label for="description">Description:</label>
+        <input type="text" class="description" required placeholder="Description de la dépense" autofocus>
+      </div>
 
-    <label for="montant">montant</label>
-    <input type="text" name="montant" id="montant" placeholder="montant">
+      <div class="form-content">
+        <label for="amount">Montant:</label>
+        <input type="number" class="amount" required placeholder="Montant de la dépense" min="0" step="0.01">
+      </div>
 
-    <label for="categorie">categorie</label>
-    <select name="categorie" id="categorie" aria-placeholder="Choisis la categorie">
-      <option value="placeholder" disabled selected>Choisis la categorie</option>
-      <option value="divertissement">divertissement</option>
-      <option value="transport">transport</option>
-      <option value="logement">logement</option>
-      <option value="alimentation">alimentation</option>
-      <option value="autre">autre</option>
-    </select>
-    <button class="btn-add">Ajouter</button>
-  </form>
-  <div class="depense-list">
-    <p>aucune dépense enregisrtrée.</p>
+      <div class="form-content">
+        <label for="category">Catégorie :</label>
+        <select name="" class="category">
+          <option value="" disabled selected>Choisissez la catégorie</option>
+          <option value="alimentation">Alimentation</option>
+          <option value="logement">Logement</option>
+          <option value="transport">Transport</option>
+          <option value="divertissement">Divertissement</option>
+        </select>
+      </div>
+
+      <button type="submit" class="add-button">Ajouter</button>
+    </form>
+    <div class="depense-list">
+      <p>Aucune dépense enregistrée.</p>
+    </div>
+    <div class="total">Total: <span>0</span> €</div>
   </div>
-  <div class="total">total: <span class="total">0</span> €</div>
-
-</div>
 </body>
+</html>
